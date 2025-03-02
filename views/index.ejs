@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Firewall Blocklist Manager</title>
+    <!-- DataTables CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      h1,
+      h2 {
+        color: #333;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #aaa;
+      }
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+      }
+      .btn {
+        padding: 5px 10px;
+        margin: 2px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #0056b3;
+      }
+      .btn-danger {
+        background-color: #dc3545;
+      }
+      .btn-danger:hover {
+        background-color: #c82333;
+      }
+      form {
+        margin-bottom: 20px;
+      }
+      input[type="text"] {
+        padding: 5px;
+        width: 300px;
+        margin-right: 10px;
+      }
+      /* Styles for the nested horizontal connection detail table */
+      .inner-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .inner-table th,
+      .inner-table td {
+        border: 1px solid #ccc;
+        padding: 4px;
+        font-size: 0.9em;
+      }
+      .inner-table th {
+        background-color: #f2f2f2;
+        text-align: center;
+      }
+      .inner-table td {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      style="display: flex; align-items: start; justify-content: space-between"
+    >
+      <div>
+        <h1>Firewall Blocklist Manager</h1>
+        <h2>Current Block Rules</h2>
+      </div>
+      <div>
+        <h2>Blocking Strings</h2>
+        <ul id="blockingStringsList">
+          <% blockingStrings.forEach(function(str) { %>
+          <li>
+            <%= str %>
+            <button
+              class="btn btn-danger"
+              onclick="deleteBlockingString('<%= str %>')"
+            >
+              Delete
+            </button>
+          </li>
+          <% }) %>
+        </ul>
+
+        <form id="addBlockingForm">
+          <input
+            type="text"
+            id="newBlocking"
+            placeholder="Enter new blocking string"
+            required
+          />
+          <button class="btn" type="submit">Add Blocking String</button>
+        </form>
+      </div>
+    </div>
+    <table id="blocklistTable">
+      <thead>
+        <tr>
+          <th>Rule Name</th>
+          <th>IP</th>
+          <th>Block String</th>
+          <th>Connection Detail</th>
+          <th>Timestamp</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% blockRules.forEach(function(rule) { %>
+        <tr>
+          <td><%= rule.ruleName %></td>
+          <td><%= rule.ip %></td>
+          <td><%= rule.blockString %></td>
+          <td>
+            <% if (rule.connectionDetail) { %>
+            <table class="inner-table">
+              <thead>
+                <tr>
+                  <th>Protocol</th>
+                  <th>State</th>
+                  <th>Local Address</th>
+                  <th>Local Port</th>
+                  <th>Remote IP</th>
+                  <th>Remote Port</th>
+                  <th>Remote Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><%= rule.connectionDetail.protocol %></td>
+                  <td><%= rule.connectionDetail.state %></td>
+                  <td><%= rule.connectionDetail.local.address %></td>
+                  <td><%= rule.connectionDetail.local.port %></td>
+                  <td><%= rule.connectionDetail.remote.ip %></td>
+                  <td><%= rule.connectionDetail.remote.port %></td>
+                  <td><%= rule.connectionDetail.remote.address %></td>
+                </tr>
+              </tbody>
+            </table>
+            <% } else { %> - <% } %>
+          </td>
+          <td><%= new Date(rule.timestamp).toLocaleString() %></td>
+          <td>
+            <button
+              class="btn btn-danger"
+              onclick="unblockRule('<%= rule.ruleName %>')"
+            >
+              Unblock
+            </button>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <!-- jQuery and DataTables scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        // Initialize DataTables on the blocklist table.
+        $("#blocklistTable").DataTable({
+          // Optional configuration: disable ordering on the Connection Detail column:
+          columnDefs: [{ orderable: false, targets: 3 }],
+        });
+      });
+
+      async function unblockRule(ruleName) {
+        const res = await fetch("/api/unblock", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ruleName }),
+        });
+        const result = await res.json();
+        if (result.success) window.location.reload();
+        else alert("Failed to unblock rule: " + result.error);
+      }
+
+      async function deleteBlockingString(blockStr) {
+        const res = await fetch(
+          `/api/blockings/${encodeURIComponent(blockStr)}`,
+          { method: "DELETE" }
+        );
+        const result = await res.json();
+        if (result.success) window.location.reload();
+        else alert("Error deleting blocking string");
+      }
+
+      document
+        .getElementById("addBlockingForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const newBlocking = document
+            .getElementById("newBlocking")
+            .value.trim();
+          if (!newBlocking) return;
+          const res = await fetch("/api/blockings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ blockStr: newBlocking }),
+          });
+          const result = await res.json();
+          if (result.success) window.location.reload();
+          else alert("Error: " + result.error);
+        });
+    </script>
+  </body>
+</html>

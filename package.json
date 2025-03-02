@@ -1,0 +1,22 @@
+{
+  "name": "node-proxy",
+  "version": "1.0.0",
+  "description": "Node Proxy For Managing Cursor Network Traffic",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bruhtesfa Zelealem Enyew",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cap": "^0.2.1",
+    "cidr-matcher": "^2.1.1",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "lowdb": "1.0.0",
+    "node-netstat": "^1.9.0",
+    "pcap-parser": "^0.2.1",
+    "util": "^0.12.5"
+  }
+}
