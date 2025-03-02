@@ -41,4 +41,6 @@
    ```bash
    git clone https://github.com/bruhtesfa-gh/cursor-firewall.git
    cd node-proxy
+   npm install
+   node app.js
    ```
