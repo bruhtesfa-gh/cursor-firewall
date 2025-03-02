@@ -81,86 +81,6 @@
       "timestamp": 1740853980074
     },
     {
-      "ip": "3.5.1.197",
-      "ruleName": "Block_IP_3.5.1.197",
-      "blockString": "s3",
-      "connectionDetail": {
-        "protocol": "tcp",
-        "local": {
-          "port": 7906,
-          "address": "192.168.200.107"
-        },
-        "remote": {
-          "port": 443,
-          "address": "s3-r-w.us-east-1.amazonaws.com",
-          "ip": "3.5.1.197"
-        },
-        "state": "ESTABLISHED",
-        "pid": 30040
-      },
-      "timestamp": 1740854260452
-    },
-    {
-      "ip": "3.5.1.197",
-      "ruleName": "Block_IP_3.5.1.197",
-      "blockString": "s3",
-      "connectionDetail": {
-        "protocol": "tcp",
-        "local": {
-          "port": 7905,
-          "address": "192.168.200.107"
-        },
-        "remote": {
-          "port": 443,
-          "address": "s3-r-w.us-east-1.amazonaws.com",
-          "ip": "3.5.1.197"
-        },
-        "state": "ESTABLISHED",
-        "pid": 30040
-      },
-      "timestamp": 1740854260652
-    },
-    {
-      "ip": "16.182.100.58",
-      "ruleName": "Block_IP_16.182.100.58",
-      "blockString": "s3",
-      "connectionDetail": {
-        "protocol": "tcp",
-        "local": {
-          "port": 7953,
-          "address": "192.168.200.107"
-        },
-        "remote": {
-          "port": 443,
-          "address": "s3-us-east-1-r-w.amazonaws.com",
-          "ip": "16.182.100.58"
-        },
-        "state": "ESTABLISHED",
-        "pid": 30040
-      },
-      "timestamp": 1740854324691
-    },
-    {
-      "ip": "16.182.100.58",
-      "ruleName": "Block_IP_16.182.100.58",
-      "blockString": "s3",
-      "connectionDetail": {
-        "protocol": "tcp",
-        "local": {
-          "port": 7954,
-          "address": "192.168.200.107"
-        },
-        "remote": {
-          "port": 443,
-          "address": "s3-us-east-1-r-w.amazonaws.com",
-          "ip": "16.182.100.58"
-        },
-        "state": "SYN_SENT",
-        "pid": 30040
-      },
-      "timestamp": 1740854324799
-    },
-    {
       "ip": "54.231.197.42",
       "ruleName": "Block_IP_54.231.197.42",
       "blockString": "s3",
@@ -179,26 +99,6 @@
         "pid": 30040
       },
       "timestamp": 1740854326866
-    },
-    {
-      "ip": "3.5.13.238",
-      "ruleName": "Block_IP_3.5.13.238",
-      "blockString": "s3",
-      "connectionDetail": {
-        "protocol": "tcp",
-        "local": {
-          "port": 7969,
-          "address": "192.168.200.107"
-        },
-        "remote": {
-          "port": 443,
-          "address": "s3-r-w.us-east-1.amazonaws.com",
-          "ip": "3.5.13.238"
-        },
-        "state": "SYN_SENT",
-        "pid": 30040
-      },
-      "timestamp": 1740854340749
     },
     {
       "ip": "54.231.236.2",
@@ -321,26 +221,6 @@
       "timestamp": 1740854420815
     },
     {
-      "ip": "3.5.8.199",
-      "ruleName": "Block_IP_3.5.8.199",
-      "blockString": "s3",
-      "connectionDetail": {
-        "protocol": "tcp",
-        "local": {
-          "port": 8082,
-          "address": "192.168.200.107"
-        },
-        "remote": {
-          "port": 443,
-          "address": "s3-r-w.us-east-1.amazonaws.com",
-          "ip": "3.5.8.199"
-        },
-        "state": "SYN_SENT",
-        "pid": 30040
-      },
-      "timestamp": 1740854457090
-    },
-    {
       "ip": "52.216.76.0",
       "ruleName": "Block_IP_52.216.76.0",
       "blockString": "s3",
@@ -419,6 +299,66 @@
         "pid": 23180
       },
       "timestamp": 1740903156679
+    },
+    {
+      "ip": "54.231.194.90",
+      "ruleName": "Block_IP_54.231.194.90",
+      "blockString": "s3",
+      "connectionDetail": {
+        "protocol": "tcp",
+        "local": {
+          "port": 11616,
+          "address": "192.168.204.107"
+        },
+        "remote": {
+          "port": 443,
+          "address": "s3-us-east-1-r-w.amazonaws.com",
+          "ip": "54.231.194.90"
+        },
+        "state": "ESTABLISHED",
+        "pid": 33068
+      },
+      "timestamp": 1740909991331
+    },
+    {
+      "ip": "3.5.9.2",
+      "ruleName": "Block_IP_3.5.9.2",
+      "blockString": "s3",
+      "connectionDetail": {
+        "protocol": "tcp",
+        "local": {
+          "port": 11695,
+          "address": "192.168.204.107"
+        },
+        "remote": {
+          "port": 443,
+          "address": "s3.us-east-1.amazonaws.com",
+          "ip": "3.5.9.2"
+        },
+        "state": "ESTABLISHED",
+        "pid": 33068
+      },
+      "timestamp": 1740910163987
+    },
+    {
+      "ip": "16.15.192.154",
+      "ruleName": "Block_IP_16.15.192.154",
+      "blockString": "aws.amazon.com",
+      "connectionDetail": {
+        "protocol": "tcp",
+        "local": {
+          "port": 11702,
+          "address": "192.168.204.107"
+        },
+        "remote": {
+          "port": 443,
+          "address": "aws.amazon.com",
+          "ip": "16.15.192.154"
+        },
+        "state": "ESTABLISHED",
+        "pid": 33068
+      },
+      "timestamp": 1740910165920
     }
   ],
   "blockingStrings": [

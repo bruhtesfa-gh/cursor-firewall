@@ -1,5 +1,5 @@
 {
-  "name": "node-proxy",
+  "name": "cursor-firewall",
   "version": "1.0.0",
   "description": "Node Proxy For Managing Cursor Network Traffic",
   "main": "app.js",
@@ -8,6 +8,13 @@
   },
   "author": "Bruhtesfa Zelealem Enyew",
   "license": "ISC",
+  "pkg": {
+    "assets": [
+      "views/**/*",
+      "public/**/*",
+      ".env"
+    ]
+  },
   "dependencies": {
     "body-parser": "^1.20.3",
     "cap": "^0.2.1",

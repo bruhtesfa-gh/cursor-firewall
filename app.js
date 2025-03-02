@@ -20,13 +20,13 @@ const netstat = require("node-netstat");
 // Promisify built-ins
 const execPromise = promisify(exec);
 const reverseDns = promisify(dns.reverse);
-const lookup = promisify(dns.lookup);
+// const lookup = promisify(dns.lookup);
 
 const bloackingIpList = {};
 
 async function getAwsIpRanges() {
   // Adjust the file path as needed.
-  const filePath = path.join(process.cwd(), "ip-ranges.json");
+  const filePath = path.join(process.cwd(), "db/ip-ranges.json");
   const fileData = await readFile(filePath, "utf-8");
   const data = JSON.parse(fileData);
   // Return an array of IP prefixes.
@@ -44,7 +44,7 @@ async function isAwsS3Ip(ip) {
 const REFRESH_INTERVAL = 2000;
 
 // Setup lowdb (database stored in db.json)
-const adapter = new FileSync("db.json");
+const adapter = new FileSync("db/db.json");
 const db = low(adapter);
 db.defaults({
   blockRules: [],
@@ -153,7 +153,7 @@ async function getProcessNameByPid(pid) {
 
 async function getAwsIpRanges() {
   // Adjust the file path as needed.
-  const filePath = path.join(process.cwd(), "ip-ranges.json");
+  const filePath = path.join(process.cwd(), "db/ip-ranges.json");
   const fileData = await readFile(filePath, "utf-8");
   const data = JSON.parse(fileData);
   // Return an array of IP prefixes.
@@ -244,7 +244,8 @@ setInterval(() => {
 const app = express();
 app.use(bodyParser.json());
 app.set("view engine", "ejs"); // Use EJS as the template engine
-app.set("views", "./views"); // Set views folder
+app.engine("ejs", require("ejs").__express);
+app.set("views", path.join(process.cwd(), "views")); // Set views folder
 
 // Home route: render the index page using EJS.
 app.get("/", (req, res) => {
